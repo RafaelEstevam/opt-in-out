@@ -11,7 +11,7 @@ module.exports = {
         const {term_name, start_date} = req.body;
 
         let lastTermActivate = await Term.findOne().sort({term_version: -1}).limit(1);
-        const newTermVersion = lastTermActivate?.term_version + 1;
+        const newTermVersion = lastTermActivate?.term_version ? lastTermActivate?.term_version + 1 : 1;
         let term = await Term.create({term_version: newTermVersion, term_name, start_date});
 
         term.save();

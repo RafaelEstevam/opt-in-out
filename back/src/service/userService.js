@@ -10,7 +10,9 @@ const UserSchema = new mongoose.Schema({
     recieve_call: Boolean,
     show_sensitive_data: Boolean,
     term_accept: Boolean,
-    term_accept_version: String
+    term_accept_version: Number,
+    created_at: Date,
+    updated_at: Date
 });
                                 
 module.exports = mongoose.model('Users', UserSchema);
