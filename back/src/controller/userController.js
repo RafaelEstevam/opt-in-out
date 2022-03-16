@@ -1,5 +1,5 @@
-const User = require("../service/userService");
-const Term = require("../service/termService");
+const User = require("../schemas/userService");
+const Term = require("../schemas/termService");
 const interceptor = require("../utils/interceptor");
 
 module.exports = {

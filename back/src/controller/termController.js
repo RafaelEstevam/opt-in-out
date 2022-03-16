@@ -1,4 +1,4 @@
-const Term = require("../service/termService");
+const Term = require("../schemas/termService");
 
 module.exports = {
     async getLastTerm (req, res){
