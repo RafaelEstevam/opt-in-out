@@ -1,6 +1,7 @@
 const {Router} = require("express");
 const userController = require("./controller/userController");
 const termController = require("./controller/termController");
+const historicController = require("./controller/historicController");
 
 const routes = Router();
 
@@ -14,5 +15,8 @@ routes.get('/users/:id', userController.get);
 
 routes.post('/term/new', termController.post);
 routes.get('/term/get/last', termController.getLastTerm);
+
+routes.get('/historics', historicController.getHistorics);
+routes.get('/historics/:user_id', historicController.getHistoricsByUser);
 
 module.exports = routes;
