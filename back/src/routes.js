@@ -10,6 +10,7 @@ routes.get('/', (req, res) =>{
 
 routes.post('/users/new', userController.post);
 routes.put('/users/edit/:id', userController.put);
+routes.get('/users/:id', userController.get);
 
 routes.post('/term/new', termController.post);
 routes.get('/term/get/last', termController.getLastTerm);
