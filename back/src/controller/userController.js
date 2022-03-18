@@ -18,7 +18,7 @@ module.exports = {
                 recieve_email,
                 show_sensitive_data,
                 term_accept,
-                term_accept_version: term_accept ? currentTerm.term_version : null,
+                term_accept_version: term_accept_version ? currentTerm.term_version : null,
                 created_at,
                 updated_at
             });
@@ -26,6 +26,7 @@ module.exports = {
             interceptor(req, res, user);
 
             user.save();
+
             return res.json(user);
         }else{
             return res.send("Usuário já cadastrado");
@@ -42,7 +43,7 @@ module.exports = {
         if(user){
 
             const updated_at = new Date();
-            await User.updateOne({id}, {email, password, name, doc, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version, updated_at});
+            await User.findByIdAndUpdate(id, {email, password, name, doc, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version, updated_at});
             interceptor(req, res, user);
 
             return res.send("Usuário alterado com sucesso");
@@ -63,7 +64,7 @@ module.exports = {
                         $eq: ["$show_sensitive_data", true]
                     },
                     "then": "$doc",
-                    "else": "***"
+                    "else": ""
                 }
             },
             name: {
@@ -72,7 +73,7 @@ module.exports = {
                         $eq: ["$show_sensitive_data", true]
                     },
                     "then": "$name",
-                    "else": "***"
+                    "else": ""
                 }
             },
             email: {
@@ -81,7 +82,7 @@ module.exports = {
                         $eq: ["$show_sensitive_data", true]
                     },
                     "then": "$email",
-                    "else": "***"
+                    "else": ""
                 }
             }
         }
@@ -93,18 +94,41 @@ module.exports = {
         }else{
             return res.send("Usuário não encontrado");
         }
+    },
+
+    async getAllUsers(req, res){
+        let users = await User.find({});
+        return res.json(users);
+    },
+
+    async getByAcceptServices(req, res){
+
+        const {recieve_email, recieve_sms} = req.body;
+
+        let users = await User.find(
+            {
+                "$or":[
+                    {"$or": [
+                        {
+                            "recieve_email": {
+                                "$eq": recieve_email
+                            }
+                        }
+                    ]},
+                    {"$or": [
+                        {
+                            "recieve_sms": {
+                                "$eq": recieve_sms
+                            }
+                        }
+                    ]
+                    }
+                ]
+            },
+            {_id: 1, email: 1, recieve_email: 1, recieve_sms: 1}
+        );
+
+        return res.json(users);
 
     }
 }
-
-// {
-//     doc: {
-//         $cond: {
-//             if: {
-//                 $eq: ["$show_sensitive_data", true]
-//             },
-//             "then": "$doc",
-//             "else": "***"
-//         }
-//     }
-// }
