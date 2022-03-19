@@ -2,6 +2,8 @@ const User = require("../schemas/userService");
 const Term = require("../schemas/termService");
 const interceptor = require("../utils/interceptor");
 
+const bcrypt = require('bcrypt');
+
 const project_data = {
     recieve_email: 1,
     recieve_sms: 1,
@@ -32,20 +34,31 @@ const project_data = {
             "then": "$email",
             "else": "***"
         }
+    },
+    phone: {
+        $cond: {
+            if: {
+                $eq: ["$show_sensitive_data", true]
+            },
+            "then": "$phone",
+            "else": "***"
+        }
     }
 }
 
 module.exports = {
     async post (req, res){
-        const {email, password, name, doc, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version, created_at, updated_at} = req.body;
+        const {email, password, name, doc, phone, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version, created_at, updated_at} = req.body;
         let user = await User.findOne({doc});
         let currentTerm = await Term.findOne().sort({term_version: -1}).limit(1)
-
+        let salt = bcrypt.genSaltSync(8);
+        const hashedpass = await bcrypt.hashSync(password, salt);
         if(!user){
             user = await User.create({
                 email,
-                password,
+                password: hashedpass,
                 name,
+                phone,
                 doc,
                 recieve_sms,
                 recieve_email,
@@ -68,15 +81,18 @@ module.exports = {
 
     async put (req, res) {
 
-        const {email, password, name, doc, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version} = req.body;
+        const {email, password, name, doc, phone, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version} = req.body;
         const {id} = req.params;
+
+        let salt = bcrypt.genSaltSync(8);
+        const hashedpass = await bcrypt.hashSync(password, salt);
 
         let user = await User.findById(id);
 
         if(user){
 
             const updated_at = new Date();
-            await User.findByIdAndUpdate(id, {email, password, name, doc, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version, updated_at});
+            await User.findByIdAndUpdate(id, {email, password: hashedpass, name, doc, phone, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version, updated_at});
             interceptor(req, res, user);
 
             return res.send("Usuário alterado com sucesso");
@@ -129,7 +145,7 @@ module.exports = {
                     }
                 ]
             },
-            {_id: 1, email: 1, recieve_email: 1, recieve_sms: 1}
+            {_id: 1, email: 1, phone: 1, recieve_email: 1, recieve_sms: 1}
         );
 
         return res.json(users);

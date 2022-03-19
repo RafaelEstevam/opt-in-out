@@ -111,17 +111,56 @@ Retorna o registro do termo no banco, com seu conteúdo criptografado.
 ### Post Validação do termo ativo
 
 ```
-<endereco_do_ambiente>/term/new
+<endereco_do_ambiente>/term/validate
 ```
 
 **Corpo da requisição**
 
-![Retorno](postTerm.png "Retorno")
+![Retorno](postValidateTerm1.png "Retorno")
 
-Retorna o registro do termo no banco, com seu conteúdo criptografado.
+Retorna o termo junto da sua validação de conteúdo. Caso haja alterações, o termo será invalidado.
 
-![Retorno](postTermReturn.png "Retorno")
+![Retorno](postValidateTerm2.png "Retorno")
 
+### Post Usuário
+
+```
+<endereco_do_ambiente>/users/new
+```
+
+**Corpo da requisição**
+
+![Retorno](postUser1.png "Retorno")
+
+Retorna os dados do usuário criado.
+
+![Retorno](postUser2.png "Retorno")
+
+### Put Usuário
+
+```
+<endereco_do_ambiente>/users/edit/<id>
+```
+
+**Corpo da requisição**
+
+![Retorno](postUser1.png "Retorno")
+
+Retorna mensagem de sucesso.
+
+### Post Busca de usuários que aceitam receber emails e SMS
+
+```
+<endereco_do_ambiente>/users/recieveNotifications
+```
+
+**Corpo da requisição**
+
+![Retorno](getByNotification1.png "Retorno")
+
+![Retorno](getByNotification2.png "Retorno")
+
+Retorna uma lista de usuários que aceitam receber contato através do canal buscado.
 
 
 
