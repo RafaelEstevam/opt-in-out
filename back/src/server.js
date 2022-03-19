@@ -8,7 +8,7 @@ const app = express();
 const server = http.Server(app);
 
 // mongoose.connect('mongodb+srv://optInOut:optInOut@optinout.0yjik.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
-mongoose.connect('mongodb://localhost:27017', {
+mongoose.connect(process.env.BASE, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });

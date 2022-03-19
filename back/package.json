@@ -11,9 +11,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "dev": "env-cmd -f .env nodemon src/server.js"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
+  },
   "author": "",
   "license": "ISC"
 }

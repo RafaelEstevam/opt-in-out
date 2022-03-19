@@ -16,7 +16,8 @@ routes.get('/users/get/all', userController.getAllUsers);
 routes.post('/users/recieveNotifications', userController.getByAcceptServices);
 
 routes.post('/term/new', termController.post);
-routes.get('/term/get/last', termController.getLastTerm);
+routes.post('/term/validate', termController.validateTerm);
+routes.get('/term/get/active', termController.getLastTerm);
 
 routes.get('/historics', historicController.getHistorics);
 routes.get('/historics/:user_id', historicController.getHistoricsByUser);
