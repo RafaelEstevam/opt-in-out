@@ -1,6 +1,6 @@
 const Historic = require('../schemas/historicService');
 
-const postHistoric = async (req, res, user) => {
+const interceptor = async (req, res, user) => {
     const {term_accept, term_accept_version, recieve_sms, recieve_email, show_sensitive_data} = req.body;
     const {_id} = user;
 
@@ -17,4 +17,4 @@ const postHistoric = async (req, res, user) => {
 
 }
 
-module.exports = postHistoric;
+module.exports = interceptor;

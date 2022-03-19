@@ -2,6 +2,39 @@ const User = require("../schemas/userService");
 const Term = require("../schemas/termService");
 const interceptor = require("../utils/interceptor");
 
+const project_data = {
+    recieve_email: 1,
+    recieve_sms: 1,
+    show_sensitive_data: 1,
+    doc: {
+        $cond: {
+            if: {
+                $eq: ["$show_sensitive_data", true]
+            },
+            "then": "$doc",
+            "else": "***"
+        }
+    },
+    name: {
+        $cond: {
+            if: {
+                $eq: ["$show_sensitive_data", true]
+            },
+            "then": "$name",
+            "else": "***"
+        }
+    },
+    email: {
+        $cond: {
+            if: {
+                $eq: ["$show_sensitive_data", true]
+            },
+            "then": "$email",
+            "else": "***"
+        }
+    }
+}
+
 module.exports = {
     async post (req, res){
         const {email, password, name, doc, recieve_sms, recieve_email, show_sensitive_data, term_accept, term_accept_version, created_at, updated_at} = req.body;
@@ -57,36 +90,6 @@ module.exports = {
 
         const {id} = req.params;
 
-        const project_data = {
-            doc: {
-                $cond: {
-                    if: {
-                        $eq: ["$show_sensitive_data", true]
-                    },
-                    "then": "$doc",
-                    "else": ""
-                }
-            },
-            name: {
-                $cond: {
-                    if: {
-                        $eq: ["$show_sensitive_data", true]
-                    },
-                    "then": "$name",
-                    "else": ""
-                }
-            },
-            email: {
-                $cond: {
-                    if: {
-                        $eq: ["$show_sensitive_data", true]
-                    },
-                    "then": "$email",
-                    "else": ""
-                }
-            }
-        }
-
         let user = await User.findById(id, project_data);
 
         if(user){
@@ -97,7 +100,8 @@ module.exports = {
     },
 
     async getAllUsers(req, res){
-        let users = await User.find({});
+
+        let users = await User.find({}, project_data);
         return res.json(users);
     },
 
