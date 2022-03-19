@@ -47,6 +47,7 @@ O projeto disponibiliza APIs para seu consumo.
 ```
 
 Retorna o termo ativo.
+
 ![Retorno](termGetActive.png "Retorno")
 
 ### GET Usuário
