@@ -92,6 +92,38 @@ Retorna uma lista (array) com todos os históricos de alterações de um usuári
 
 ![Retorno](historicsByUser.png "Retorno")
 
+### Post Termo
+
+Por padrão, o último termo cadastrado será o termo ativo dentro do sistema, sendo assim, seu versionamento será incrementado.
+
+```
+<endereco_do_ambiente>/term/new
+```
+
+**Corpo da requisição**
+
+![Retorno](postTerm.png "Retorno")
+
+Retorna o registro do termo no banco, com seu conteúdo criptografado.
+
+![Retorno](postTermReturn.png "Retorno")
+
+### Post Validação do termo ativo
+
+```
+<endereco_do_ambiente>/term/new
+```
+
+**Corpo da requisição**
+
+![Retorno](postTerm.png "Retorno")
+
+Retorna o registro do termo no banco, com seu conteúdo criptografado.
+
+![Retorno](postTermReturn.png "Retorno")
+
+
+
 
 
 

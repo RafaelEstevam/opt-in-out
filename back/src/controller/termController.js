@@ -11,7 +11,7 @@ module.exports = {
 
         const {term_name, start_date, term_text} = req.body;
 
-        let salt = bcrypt.genSaltSync(process.env.KEY);
+        let salt = bcrypt.genSaltSync(8);
         const hashedText = await bcrypt.hashSync(term_text, salt);
 
         let lastTermActivate = await Term.findOne().sort({term_version: -1}).limit(1);
