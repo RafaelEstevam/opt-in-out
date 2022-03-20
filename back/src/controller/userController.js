@@ -1,5 +1,5 @@
-const User = require("../schemas/userService");
-const Term = require("../schemas/termService");
+const User = require("../schemas/userSchema");
+const Term = require("../schemas/termSchema");
 const interceptor = require("../utils/interceptor");
 
 const bcrypt = require('bcrypt');

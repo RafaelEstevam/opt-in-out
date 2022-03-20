@@ -4,11 +4,18 @@
 
 O seguinte projeto tem como objetivo atender a LGPD (Lei geral da proteção de dados), apresentando uma solução de configurações de meios de comunicação que um determinado usuário aceita receber de uma plataforma (Opt In-out). Além disso, a solução deverá apresentar um histórico dessas configurações por usuário, descrevendo qual a versão do termo aceito pelo usuário, no momento do seu registro no sistema, e quais foram as opções de comunicação aceitas, ou não, no momento em que este usuário se registrou ou fez alguma alteração em seus dados e preferências.
 
+## Regras do projeto
+
+- Toda criação ou alteração de usuário irá gerar um registro na coleção Histórico;
+- O termo ativo será o último cadastrado no banco de dados;
+- No momento da criação ou edição do usuário, é necessário passar a versão do termo que ele está aceitando;
+- Dentro da coleção de históricos, deve ser mantida as novas configurações e quai a versão aceita pelo usuário.
+
 ## Arquitetura do projeto
 
 O projeto foi desenvolvido em Node (Javascript) e com MongoDB como banco de dados.
 
-![Estrutura](estrutura.png "Estrutura")
+![Estrutura](./assets/estrutura.png "Estrutura")
 
 ## Schemas do banco de dados
 
@@ -20,25 +27,29 @@ Para realização do projeto, foi utilizado 3 schemas dentro do MongoDB:
 
 ### Schema Usuário
 
-![Schema Usuario](schemaUsuario.png "Schema Usuario")
+![Schema Usuario](./assets/schemaUsuario.png "Schema Usuario")
 
 ### Schema Termo
 
-![Schema Termo](schemaTermo.png "Schema Termo")
+![Schema Termo](./assets/schemaTermo.png "Schema Termo")
 
 ### Schema Histórico
 
-![Schema Histórico](schemaHistorico.png "Schema Histórico")
+![Schema Histórico](./assets/schemaHistorico.png "Schema Histórico")
 
 **Por se tratar de um banco não relacional, não existe relacionamento entre os schemas, entretanto, no instante em que se cria ou edita um usuário, é feito uma inserção na coleção de históricos, dentro do mongoDB, onde é registrado o histórico de alteração junto do id do usuário.**
 
-![Registro de histórico](interceptor1.png "Registro de histórico")
+![Registro de histórico](./assets/interceptor1.png "Registro de histórico")
 
-![Registro de histórico](interceptor2.png "Registro de histórico")
+![Registro de histórico](./assets/interceptor2.png "Registro de histórico")
 
 ## APIs
 
-O projeto disponibiliza APIs para seu consumo.
+Abaixo, a lista de APIs que o projeto disponibiliza para seu consumo.
+
+_endereco_do_ambiente_ = Url onde o ambiente está disponível.
+
+_id_ = Id do usuário.
 
 ### GET Termo
 
@@ -48,7 +59,7 @@ O projeto disponibiliza APIs para seu consumo.
 
 Retorna o termo ativo.
 
-![Retorno](termGetActive.png "Retorno")
+![Retorno](./assets/termGetActive.png "Retorno")
 
 ### GET Usuário
 
@@ -58,9 +69,9 @@ Retorna o termo ativo.
 
 Retorna o usuário por ID. Este retorno pode variar conforme a configuração do usuário. Se o usuário optar por não exibir os dados sensíveis dele, alguns dados serão mascarados no momento da consulta.
 
-![Retorno](usersId1.png "Retorno")
+![Retorno](./assets/usersId1.png "Retorno")
 
-![Retorno](usersId2.png "Retorno")
+![Retorno](./assets/usersId2.png "Retorno")
 
 ### GET Todos os usuários
 
@@ -70,7 +81,7 @@ Retorna o usuário por ID. Este retorno pode variar conforme a configuração do
 
 Retorna uma lista (array) com todos os usuários cadastrados.
 
-![Retorno](getAllUsers.png "Retorno")
+![Retorno](./assets/getAllUsers.png "Retorno")
 
 ### GET Todos os históricos de alteração
 
@@ -78,9 +89,9 @@ Retorna uma lista (array) com todos os usuários cadastrados.
 <endereco_do_ambiente>/historics
 ```
 
-Retorna uma lista (array) com todos os históricos de alterações do banco.
+Retorna uma lista (array) com todos os históricos de alterações de configurações dos usuários registradas no banco.
 
-![Retorno](historics.png "Retorno")
+![Retorno](./assets/historics.png "Retorno")
 
 ### GET Históricos de alteração por usuário
 
@@ -90,7 +101,7 @@ Retorna uma lista (array) com todos os históricos de alterações do banco.
 
 Retorna uma lista (array) com todos os históricos de alterações de um usuário do banco.
 
-![Retorno](historicsByUser.png "Retorno")
+![Retorno](./assets/historicsByUser.png "Retorno")
 
 ### Post Termo
 
@@ -102,11 +113,11 @@ Por padrão, o último termo cadastrado será o termo ativo dentro do sistema, s
 
 **Corpo da requisição**
 
-![Retorno](postTerm.png "Retorno")
+![Retorno](./assets/postTerm.png "Retorno")
 
 Retorna o registro do termo no banco, com seu conteúdo criptografado.
 
-![Retorno](postTermReturn.png "Retorno")
+![Retorno](./assets/postTermReturn.png "Retorno")
 
 ### Post Validação do termo ativo
 
@@ -116,11 +127,11 @@ Retorna o registro do termo no banco, com seu conteúdo criptografado.
 
 **Corpo da requisição**
 
-![Retorno](postValidateTerm1.png "Retorno")
+![Retorno](./assets/postValidateTerm1.png "Retorno")
 
 Retorna o termo junto da sua validação de conteúdo. Caso haja alterações, o termo será invalidado.
 
-![Retorno](postValidateTerm2.png "Retorno")
+![Retorno](./assets/postValidateTerm2.png "Retorno")
 
 ### Post Usuário
 
@@ -130,11 +141,11 @@ Retorna o termo junto da sua validação de conteúdo. Caso haja alterações, o
 
 **Corpo da requisição**
 
-![Retorno](postUser1.png "Retorno")
+![Retorno](./assets/postUser1.png "Retorno")
 
 Retorna os dados do usuário criado.
 
-![Retorno](postUser2.png "Retorno")
+![Retorno](./assets/postUser2.png "Retorno")
 
 ### Put Usuário
 
@@ -144,7 +155,7 @@ Retorna os dados do usuário criado.
 
 **Corpo da requisição**
 
-![Retorno](postUser1.png "Retorno")
+![Retorno](./assets/postUser1.png "Retorno")
 
 Retorna mensagem de sucesso.
 
@@ -156,14 +167,57 @@ Retorna mensagem de sucesso.
 
 **Corpo da requisição**
 
-![Retorno](getByNotification1.png "Retorno")
+![Retorno](./assets/getByNotification1.png "Retorno")
 
-![Retorno](getByNotification2.png "Retorno")
+![Retorno](./assets/getByNotification2.png "Retorno")
 
 Retorna uma lista de usuários que aceitam receber contato através do canal buscado.
 
+## Rodando o projeto
 
+Dentro da pasta _./back_.
 
+```
+npm install - instalar dependências do Node
+npm start - rodar o projeto
+```
+
+O backend será iniciado em http://localhost:8081
+
+## Estrutura de pastas
+
+```
+projeto
+│   README.md
+│   .gitignore
+│___assets
+|   |   *.png
+|   |   ...
+└───back
+│   │   .env
+│   │   package-lock.json
+|   |   package.json
+│   │
+│   └───src
+│       │   routes.js
+│       │   server.js
+│       │___controller
+|       |   |   historicController.js
+|       |   |   termController.js
+|       |   |   userController.js
+│       |___schemas
+|       |   |   historicSchema.js
+|       |   |   termSchema.js
+|       |   |   userSchema.js
+|       |___utils
+|           |   interceptor.js
+```
+
+# Lista de bibliotecas usadas
+
+- express: Framework para criação de aplicações web com APIs;
+- mongoose: Framework para conexão e operações dentro do MongoDB;
+- bcrypt: Biblioteca para criações de hash. 
 
 
 

@@ -1,4 +1,4 @@
-const Historic = require('../schemas/historicService');
+const Historic = require('../schemas/historicSchema');
 
 const interceptor = async (req, res, user) => {
     const {term_accept, term_accept_version, recieve_sms, recieve_email, show_sensitive_data} = req.body;

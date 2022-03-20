@@ -1,4 +1,4 @@
-const Term = require("../schemas/termService");
+const Term = require("../schemas/termSchema");
 const bcrypt = require('bcrypt');
 
 module.exports = {

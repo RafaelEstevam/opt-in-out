@@ -1,4 +1,4 @@
-const Historic = require("../schemas/historicService");
+const Historic = require("../schemas/historicSchema");
 
 module.exports = {
     async getHistorics (req, res){
