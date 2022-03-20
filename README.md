@@ -9,7 +9,7 @@ O seguinte projeto tem como objetivo atender a LGPD (Lei geral da proteção de 
 - Toda criação ou alteração de usuário irá gerar um registro na coleção Histórico;
 - O termo ativo será o último cadastrado no banco de dados;
 - No momento da criação ou edição do usuário, é necessário passar a versão do termo que ele está aceitando;
-- Dentro da coleção de históricos, deve ser mantida as novas configurações e quai a versão aceita pelo usuário.
+- Dentro da coleção de históricos, deve ser mantida as novas configurações e qual a versão aceita pelo usuário.
 
 ## Arquitetura do projeto
 
