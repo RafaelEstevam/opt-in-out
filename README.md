@@ -1,4 +1,4 @@
-# OPT IN OUT - Projeto LAB VI - Banco de dados
+# OPT IN OUT - Projeto de Tópicos avançados de banco de dados - Banco de dados - FATEC 2022
 
 ## Proposta
 
